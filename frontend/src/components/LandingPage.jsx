@@ -7,12 +7,12 @@ export default function LandingPage() {
       {/* Header */}
       <header className="backdrop-blur bg-white/5 border-b border-white/10 sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-          <h1 className="text-xl font-bold tracking-wide bg-linear-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
-            PlacementReady
+          <h1 className="text-2xl font-bold tracking-wide bg-linear-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
+            HireLoop
           </h1>
           <nav className="hidden md:flex gap-8 items-center">
             <a href="#features" className="hover:text-blue-400 transition">Features</a>
-            <a href="#how" className="hover:text-blue-400 transition">How it Works</a>
+            <a href="#how" className="hover:text-blue-400 transition">How it Work</a>
             <button className="px-5 py-2 rounded-xl bg-linear-to-r from-blue-500 to-purple-600 text-white font-semibold shadow-lg">
               Get Started
             </button>
