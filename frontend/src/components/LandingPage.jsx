@@ -12,7 +12,7 @@ export default function LandingPage() {
           </h1>
           <nav className="hidden md:flex gap-8 items-center">
             <a href="#features" className="hover:text-blue-400 transition">Features</a>
-            <a href="#how" className="hover:text-blue-400 transition">How it Works</a>
+            <a href="#how" className="hover:text-blue-400 transition">How it Work</a>
             <button className="px-5 py-2 rounded-xl bg-linear-to-r from-blue-500 to-purple-600 text-white font-semibold shadow-lg">
               Get Started
             </button>
