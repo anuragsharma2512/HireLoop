@@ -1,28 +1,47 @@
-import { Referral } from "../models/referral.model";
+import { Referral } from "../models/referral.model.js";
 
  
 const requestReferral = async(req,res)=>{
     try{
-        const {seniorId, companyname,jobRole,message}=req.body;
+        const { seniorId, companyName, jobRole, message, resumeUrl } = req.body;
         const studentId=req.user.id;
+        
+         if (!seniorId || !companyName || !jobRole) {
+            return res.status(400).json({ message: "Missing required fields" });
+        }
 
         if(studentId==seniorId){
             return res.status(400).json({message:"you're a senior so u can't request a referral"})
         }
-        const existingRequest = await Referral.findOne({
+        const today = new Date();
+        today.setHours(0,0,0,0);
+        const count =await Referral.countDocuments({
             studentId,
-            seniorId,
-            companyname,
-            jobRole,
-            status:"pending"
+            createdAt:{$gte: today}
         });
-        if(existingRequest){
-            return res.status(400).json({message:"already created a request earlier"});
+        if(count>=5){
+            return res.status(400).json({
+                message: "Daily referral limit reached"
+            });
         }
+        const existing = await Referral.findOne({
+             studentId: req.user.id,
+                        seniorId,
+                        companyName,
+                         jobRole,
+               status: "pending"
+                   });
+
+           if (existing) {
+           return res.status(400).json({
+             msg: "You already requested this referral"
+                });
+                }
+       
         const referral = new Referral({
-            studentId,
+            studentId: req.user.id,
             seniorId,
-            companyname,
+            companyName,
             jobRole,
             message
         });
@@ -39,27 +58,120 @@ const requestReferral = async(req,res)=>{
     }
 }
 
-const updateReferralStatus =async(req,res)=>{
-    try{
-            const {status}=req.params;
-            const { responseMessage }=req.body;
-            if(!["approved","rejected"].includes( status )){
-                return res.status(400).json({ message:"invalid status "});
-            }
-            const referral= await Referral.findById(req.params.id);
-            if(!referral){
-                return res.status(404).json({ message:"referral not found"});
-            }
-            referral.status=status;
-            referral.responseMessage=responseMessage;
-            await referral.save();
-            res.json(referral);
+const approveReferral = async (req, res) => {
+  try {
+    const referral = await Referral.findById(req.params.id);
 
-    }catch(err){
-        res.status(500).json({
-            message:err.message
-        });
-
+    if (!referral) {
+      return res.status(404).json({ msg: "Referral not found" });
     }
-}
-export {requestReferral,updateReferralStatus};
+
+    if (referral.seniorId.toString() !== req.user.id) {
+      return res.status(403).json({ msg: "Not authorized" });
+    }
+
+    referral.status = "approved";
+    referral.responseMessage = req.body.responseMessage ;
+
+    await referral.save();
+
+    res.status(200).json({
+      success: true,
+       data: referral
+         });
+  } catch (err) {
+    res.status(500).json({
+     success: false,
+     message: "Internal server error"
+      });
+  }
+};
+
+const rejectReferral = async (req, res) => {
+  try {
+    const referral = await Referral.findById(req.params.id);
+
+    if (!referral) {
+      return res.status(404).json({ msg: "Referral not found" });
+    }
+
+
+    if (referral.seniorId.toString() !== req.user.id) {
+      return res.status(403).json({ msg: "Not authorized" });
+    }
+
+    referral.status = "rejected";
+    referral.responseMessage = req.body.responseMessage || "";
+
+    await referral.save();
+
+    res.status(200).json({
+        success: true,
+        data: referral
+        });
+  } catch (err) {
+     res.status(500).json({
+     success: false,
+     message: "Internal server error"
+      });
+  }
+};
+const getStudentReferrals = async (req, res) => {
+  try {
+    const status = req.query.status;
+
+    let referrals;
+
+    if (status) {
+      
+      referrals = await Referral.find({
+        studentId: req.user.id,
+        status: status
+      })
+        .sort({ createdAt: -1 })
+        .populate("seniorId", "name email");
+
+    } else {
+      
+      referrals = await Referral.find({
+        studentId: req.user.id
+      })
+        .sort({ createdAt: -1 })
+        .populate("seniorId", "name email");
+    }
+
+   res.status(200).json({
+    success: true,
+    data: referrals
+     });
+
+  } catch (err) {
+     res.status(500).json({
+     success: false,
+     message: "Internal server error"
+      });
+  }
+};
+const getSeniorReferrals = async (req, res) => {
+  try {
+     const status = req.query.status;
+
+    const query = { seniorId: req.user.id };
+    if (status) query.status = status;
+    const referrals = await Referral.find(query)
+      .sort({ createdAt: -1 })
+      .populate("studentId", "name email")
+      .populate("seniorId", "name email");
+
+    res.status(200).json({
+       success: true,
+        data: referrals
+      });
+  } catch (err) {
+    res.status(500).json({
+     success: false,
+     message: "Internal server error"
+      });
+  }
+};
+export {requestReferral,approveReferral,rejectReferral,getSeniorReferrals,getStudentReferrals};

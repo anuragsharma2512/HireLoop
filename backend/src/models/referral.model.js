@@ -1,20 +1,21 @@
 import mongoose,{Schema} from "mongoose";
+
 const referralSchema = new Schema({
   studentId:{
-     type: mongoose.Schema.type.ObjectId,
+     type: mongoose.Schema.Types.ObjectId,
      ref:"User",
      required:true
      
   },
-  seniorId:{
-    type:mongoose.Schema.type.ObjectId,
-    ref:"User",
-    required:true
+  seniorId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+    required: true
   },
   companyName:{
-    type:String,
-    required:true,
-    trim:true
+    type: String,
+    required: true,
+    trim: true
   },
   jobRole:{
    type:String,

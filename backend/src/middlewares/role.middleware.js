@@ -8,4 +8,11 @@ const rolestatus = (...roles)=>{
     next();
   };
 };
-export default rolestatus;
+const isSenior = (req, res, next) => {
+  if (req.user.role !== "senior") {
+    return res.status(403).json({ msg: "Access denied. Seniors only." });
+  }
+  next();
+};
+
+export { isSenior,rolestatus };
