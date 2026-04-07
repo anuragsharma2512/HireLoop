@@ -4,21 +4,33 @@ import { motion } from "framer-motion";
 export default function LandingPage() {
   return (
     <div className="bg-[#0b0f19] text-gray-200 min-h-screen">
-      {/* Header */}
-      <header className="backdrop-blur bg-white/5 border-b border-white/10 sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-          <h1 className="text-2xl font-bold tracking-wide bg-linear-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
-            HireLoop
-          </h1>
-          <nav className="hidden md:flex gap-8 items-center">
-            <a href="#features" className="hover:text-blue-400 transition">Features</a>
-            <a href="#how" className="hover:text-blue-400 transition">How it Work</a>
-            <button className="px-5 py-2 rounded-xl bg-linear-to-r from-blue-500 to-purple-600 text-white font-semibold shadow-lg">
+      {/* --- UPDATED HEADER START --- */}
+      <header className="backdrop-blur-md bg-[#1e293b]/50 border-b border-white/10 sticky top-0 z-50">
+        <div className="max-w-7xl mx-auto px-6 py-3 flex justify-between items-center">
+          {/* LOGO SECTION */}
+          <a href="/" className="flex items-center gap-2">
+            <img 
+              src="./ca-removebg-preview.png" 
+              alt="Company Logo" 
+              className="h-12 w-auto object-contain" 
+            />
+          </a>
+
+          {/* NAVIGATION */}
+          <nav className="hidden md:flex gap-8 items-center text-white/80">
+            <a href="#features" className="hover:text-blue-400 transition-colors text-sm font-medium">
+              Features
+            </a>
+            <a href="#how" className="hover:text-blue-400 transition-colors text-sm font-medium">
+              How it Works
+            </a>
+            <button className="px-5 py-2 rounded-xl bg-gradient-to-r from-blue-500 to-purple-600 text-white text-sm font-semibold shadow-lg hover:shadow-blue-500/25 transition-all">
               Get Started
             </button>
           </nav>
         </div>
       </header>
+      {/* --- UPDATED HEADER END --- */}
 
       {/* Hero */}
       <section className="relative max-w-7xl mx-auto px-6 py-24 grid md:grid-cols-2 gap-12 items-center">
@@ -34,7 +46,7 @@ export default function LandingPage() {
         >
           <h2 className="text-4xl md:text-6xl font-bold leading-tight mb-6">
             Crack Placements
-            <span className="block bg-linear-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
+            <span className="block bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
               with Data + Referrals
             </span>
           </h2>
@@ -44,7 +56,7 @@ export default function LandingPage() {
           </p>
 
           <div className="flex gap-4">
-            <button className="px-7 py-3 rounded-2xl bg-linear-to-r from-blue-500 to-purple-600 font-semibold shadow-xl hover:scale-105 transition">
+            <button className="px-7 py-3 rounded-2xl bg-gradient-to-r from-blue-500 to-purple-600 font-semibold shadow-xl hover:scale-105 transition">
               Join as Student
             </button>
             <button className="px-7 py-3 rounded-2xl bg-white/10 backdrop-blur border border-white/10 hover:bg-white/20 transition">
@@ -125,13 +137,13 @@ export default function LandingPage() {
             ].map((step, index) => (
               <motion.div
                 key={index}
-                className="bg-linear-to-br from-white/5 to-white/0 border border-white/10 p-6 rounded-3xl text-center backdrop-blur-xl"
+                className="bg-gradient-to-br from-white/5 to-white/0 border border-white/10 p-6 rounded-3xl text-center backdrop-blur-xl"
                 initial={{ opacity: 0, y: 40 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
                 viewport={{ once: true }}
               >
-                <div className="text-3xl font-bold mb-3 bg-linear-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
+                <div className="text-3xl font-bold mb-3 bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
                   {index + 1}
                 </div>
                 <p className="font-medium">{step}</p>
@@ -143,7 +155,7 @@ export default function LandingPage() {
 
       {/* CTA */}
       <section className="py-28 text-center relative">
-        <div className="absolute inset-0 bg-linear-to-r from-blue-600/20 to-purple-600/20 blur-3xl"></div>
+        <div className="absolute inset-0 bg-gradient-to-r from-blue-600/20 to-purple-600/20 blur-3xl"></div>
 
         <motion.div
           className="relative z-10"
@@ -158,7 +170,7 @@ export default function LandingPage() {
           <p className="mb-8 text-gray-400 max-w-xl mx-auto">
             Join students preparing smarter with data-driven readiness insights and alumni-powered referrals.
           </p>
-          <button className="px-10 py-4 bg-linear-to-r from-blue-500 to-purple-600 rounded-2xl font-semibold shadow-2xl hover:scale-105 transition">
+          <button className="px-10 py-4 bg-gradient-to-r from-blue-500 to-purple-600 rounded-2xl font-semibold shadow-2xl hover:scale-105 transition">
             Create Free Account
           </button>
         </motion.div>

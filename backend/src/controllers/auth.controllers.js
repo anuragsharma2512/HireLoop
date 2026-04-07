@@ -9,7 +9,7 @@ const register = async (req, res) => {
   try {
     const user = await User.findOne({email});
     if(user) {
-      return res.status(httpStatus.NOT_FOUND).json({message: "User Already Exist"});
+      return res.status(httpStatus.FOUND).json({message: "User Already Exist"});
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -29,7 +29,7 @@ const login = async (req, res) => {
   const { email, password } = req.body;
 
   if(!email || !password){
-    return res.status(400).json({message: "Please Provide"});
+    return res.status(400).json({message: "Please enter Email or Password"});
   }
 
   try {

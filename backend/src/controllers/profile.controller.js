@@ -1,33 +1,36 @@
 import httpStatus from "http-status";
-import { StudentProfile } from "../models/studentprofile.model";
+import { StudentProfile } from "../models/studentprofile.model.js";
 
-const CreateProfile=async(req,res)=>{
+const createProfile = async (req,res) => {
     try{
-        const existing=await StudentProfile.findOne({userId:req.user.id});
+        const existing = await StudentProfile.findOne({ userId: req.user.id });
+
         if(existing){
             return res.status(httpStatus.FOUND).json({message:"Profile already exists"})
         }
-        const profile=new StudentProfile({
-            userId:req.user.id,
-            skills:req.body.skills,
-            github:req.body.github,
-            leetcode:req.body.leetcode,
-            linkedin:req.body.linkedin,
-            resumeurl:req.body.resumeurl,
-            readnessScore:req.body.readnessScore,
-            bio:req.body.bio
+
+        const profile = new StudentProfile({
+            userId: req.user.id,
+            skills: req.body.skills,
+            github: req.body.github,
+            leetcode: req.body.leetcode,
+            linkedin: req.body.linkedin,
+            resumeurl: req.body.resumeurl,
+            readnessScore: req.body.readnessScore,
+            bio: req.body.bio
         });
+
         await profile.save();
         res.status(httpStatus.CREATED).json({message: "Profile created Successfully"})
     }
     catch(err){
-    res.json({message: `Something went wrong ${err}`});
-  }
+        res.json({message: `Something went wrong ${err}`});
+    }
 }
 
-const GetProfile=async(req,res)=>{
+const getProfile = async (req,res) => {
     try{
-        const profile=await StudentProfile.findOne({userId:req.user.id}).populate("userId","name email role")
+        const profile = await StudentProfile.findOne({userId:req.user.id}).populate("userId", "name email role")
         if(!profile){
             return res.status(httpStatus.NOT_FOUND).json({message:"Profile Not Found"})
         }
@@ -37,12 +40,12 @@ const GetProfile=async(req,res)=>{
     }
 }
 
-const UpdateProfile=async(req,res)=>{
+const updateProfile = async (req,res) => {
     try{
-        const updated=await StudentProfile.findOneAndUpdate(
-            {userId:req.user.id},
+        const updated = await StudentProfile.findOneAndUpdate(
+            { userId:req.user.id },
             req.body,
-            {new:true, runValidators:true}
+            { new: true, runValidators: true }
         )
         if(!updated){
             return res.status(httpStatus.NOT_FOUND).json({message:"Profile Not Found"})
@@ -54,4 +57,4 @@ const UpdateProfile=async(req,res)=>{
     }
 }
 
-export { CreateProfile, GetProfile, UpdateProfile }
+export { createProfile, getProfile, updateProfile }
