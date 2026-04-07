@@ -2,10 +2,7 @@ import { InterviewSlot } from "../models/interviewSlot.model.js";
 import httpStatus from "http-status";
 import { InterviewBooking } from "../models/interviewBooking.model.js";
 
-
-
-export const createSlot = async (req,res)=>{
-
+export const createSlot = async (req, res)=>{
     try{
         const { date, startTime, endTime } = req.body;
 
@@ -33,7 +30,6 @@ export const createSlot = async (req,res)=>{
         res.json({message: `Something went wrong ${err}`});
     }
 }
-
 
 export const bookInterview = async(req,res) =>{
      try {
@@ -68,7 +64,6 @@ export const bookInterview = async(req,res) =>{
     }
 }
 
-
 export const completeInterview = async (req,res)=>{
 
     try{
@@ -93,7 +88,6 @@ export const completeInterview = async (req,res)=>{
         res.status(500).json({message: `Something went wrong ${err}`});
     }
 }
-
 
 export const cancelInterview = async (req,res)=>{
 
@@ -126,7 +120,6 @@ export const cancelInterview = async (req,res)=>{
         res.status(500).json({message: `Something went wrong ${err}`});
     }
 }
-
 
 export const addFeedback = async (req, res) => {
     try {
@@ -198,8 +191,6 @@ export const addFeedback = async (req, res) => {
     }
 }
 
-
-
 export const getStudentInterviewHistory = async (req, res) => {
     try {
 
@@ -229,7 +220,6 @@ export const getStudentInterviewHistory = async (req, res) => {
     }
 }
 
-
 export const getSeniorInterviewHistory = async (req, res) => {
     try {
 
@@ -251,7 +241,6 @@ export const getSeniorInterviewHistory = async (req, res) => {
             message: "Senior interview history fetched successfully",
             data: interviews
         })
-
     } catch (err) {
         res.status(500).json({
             message: `Something went wrong ${err}`
@@ -259,11 +248,8 @@ export const getSeniorInterviewHistory = async (req, res) => {
     }
 }
 
-
-
 export const getInterviewStats = async (req, res) => {
     try {
-
         const total = await InterviewBooking.countDocuments()
 
         const completed = await InterviewBooking.countDocuments({
@@ -295,7 +281,3 @@ export const getInterviewStats = async (req, res) => {
         })
     }
 }
-
-
-
-
