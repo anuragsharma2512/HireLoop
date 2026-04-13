@@ -1,5 +1,5 @@
 import httpStatus from "http-status";
-import { StudentProfile } from "../models/studentprofile.model.js";
+import { StudentProfile } from "../models/StudentProfile.model.js";
 
 const createProfile=async(req,res)=>{
     try{
@@ -13,8 +13,6 @@ const createProfile=async(req,res)=>{
             github:req.body.github,
             leetcode:req.body.leetcode,
             linkedin:req.body.linkedin,
-            resumeurl:req.body.resumeurl,
-            readnessScore:req.body.readnessScore,
             bio:req.body.bio
         });
         await profile.save();
