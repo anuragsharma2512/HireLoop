@@ -1,9 +1,11 @@
 import express from "express";
 import { Server } from "socket.io";
 import cors from "cors";
-import authRoutes from "./routes/auth.routes.js";
+import authRoutes from "./routes/auth.routes.js"
+import interviewRoutes from './routes/interview.routes.js'
 import profileRoutes from "./routes/profile.routes.js";
 import referralRoutes from "./routes/referral.routes.js";
+import companyRoutes from "./routes/company.routes.js";
 
 const app = express();
 
@@ -11,8 +13,10 @@ const app = express();
 app.use(express.json({ limit: "16kb"}))
 app.use(express.urlencoded({ extended: true, limit: "16kb"}))
 app.use("/api/v1/auth", authRoutes)
+app.use("/api/v1/interview", interviewRoutes)
 app.use("/api/v1/profile", profileRoutes)
 app.use("/api/v1/referral",referralRoutes)
+app.use("/api/v1/company", companyRoutes)
 
 // cors configuration
 app.use(cors({
