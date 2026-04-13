@@ -8,4 +8,6 @@ const rolestatus = (...roles)=>{
     next();
   };
 };
-export default rolestatus;
+
+
+export default rolestatus ;
