@@ -1,10 +1,12 @@
 import React, { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Eye, EyeOff } from "lucide-react";
+import { signup } from "../../api/auth";
 
 export default function Signup() {
   const location = useLocation();
-  const defaultRole = location.state?.role || "Student";
+  const defaultRole = location.state?.role || "student";
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -22,18 +24,26 @@ export default function Signup() {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log("Button clicked");
 
     if (formData.password !== formData.confirmPassword) {
       alert("Passwords do not match");
       return;
     }
 
-    console.log(formData);
-
     // Call your backend API here
+  
+    try{
+      const {data} = await signup(formData);
 
+      alert("Account created successfully!");
+      navigate("/login");
+    }catch(err){
+      console.log(err);
+      alert(err.response?.data?.message || err.message|| "An error occurred during signup.");
+    }
 
     
   };
@@ -163,7 +173,7 @@ export default function Signup() {
 
               <label
                 className={`cursor-pointer rounded-xl border p-4 text-center transition ${
-                  formData.role === "Student"
+                  formData.role === "student"
                     ? "border-blue-500 bg-blue-500/20 text-blue-400"
                     : "border-gray-700 bg-[#111827] text-gray-300"
                 }`}
@@ -171,8 +181,8 @@ export default function Signup() {
                 <input
                   type="radio"
                   name="role"
-                  value="Student"
-                  checked={formData.role === "Student"}
+                  value="student"
+                  checked={formData.role === "student"}
                   onChange={handleChange}
                   className="hidden"
                 />
@@ -182,7 +192,7 @@ export default function Signup() {
 
               <label
                 className={`cursor-pointer rounded-xl border p-4 text-center transition ${
-                  formData.role === "Alumni"
+                  formData.role === "alumni"
                     ? "border-purple-500 bg-purple-500/20 text-purple-400"
                     : "border-gray-700 bg-[#111827] text-gray-300"
                 }`}
@@ -190,8 +200,8 @@ export default function Signup() {
                 <input
                   type="radio"
                   name="role"
-                  value="Alumni"
-                  checked={formData.role === "Alumni"}
+                  value="alumni"
+                  checked={formData.role === "alumni"}
                   onChange={handleChange}
                   className="hidden"
                 />

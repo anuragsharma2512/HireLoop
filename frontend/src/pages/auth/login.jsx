@@ -1,12 +1,15 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Eye, EyeOff } from "lucide-react";
+import { login } from "../../api/auth.js";
 
 export default function Login() {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
+
+  const navigate = useNavigate();
 
   const [showPassword, setShowPassword] = useState(false);
 
@@ -17,12 +20,33 @@ export default function Login() {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log(formData);
 
     // Call Login API here
+
+     try {
+    const { data } = await login(formData);
+
+    alert("Login successful!");
+
+    // Example: store JWT token if returned by your backend
+    if (data.token) {
+      localStorage.setItem("token", data.token);
+    }
+
+    // Navigate after successful login
+    navigate("/dashboard");
+  } catch (err) {
+    console.error(err);
+
+    alert(
+      err.response?.data?.message ||
+      err.message ||
+      "Login failed"
+    );
+  }
   };
 
   return (

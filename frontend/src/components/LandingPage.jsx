@@ -163,7 +163,7 @@ export default function LandingPage() {
 
       {/* CTA */}
       <section className="py-28 text-center relative">
-        <div className="absolute inset-0 bg-gradient-to-r from-blue-600/20 to-purple-600/20 blur-3xl"></div>
+        <div className="absolute inset-0 bg-linear-to-r from-blue-600/20 to-purple-600/20 blur-3xl"></div>
 
         <motion.div
           className="relative z-10"
@@ -178,7 +178,7 @@ export default function LandingPage() {
           <p className="mb-8 text-gray-400 max-w-xl mx-auto">
             Join students preparing smarter with data-driven readiness insights and alumni-powered referrals.
           </p>
-          <button className="px-10 py-4 bg-gradient-to-r from-blue-500 to-purple-600 rounded-2xl font-semibold shadow-2xl hover:scale-105 transition">
+          <button className="px-10 py-4 bg-linear-to-r from-blue-500 to-purple-600 rounded-2xl font-semibold shadow-2xl hover:scale-105 transition">
             Create Free Account
           </button>
         </motion.div>
