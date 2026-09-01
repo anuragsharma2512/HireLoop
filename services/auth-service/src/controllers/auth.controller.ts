@@ -88,3 +88,26 @@ export async function refresh(req: Request, res: Response, next: NextFunction) {
     next(error);
   }
 }
+
+export async function logout(req: Request, res: Response, next: NextFunction) {
+    try{
+        const refreshToken = req.cookies.refreshToken;
+
+        await authService.logout(refreshToken);
+
+        res.clearCookie("refreshToken",{
+            httpOnly:true,
+            secure: env.COOKIE_SECURE,
+            sameSite: "lax",
+            path:"/",
+        })
+
+        return res.status(200).json({
+            success: true,
+            message: "Logged out successfully",
+        })
+
+    }catch(error){
+        next(error);
+    }
+}

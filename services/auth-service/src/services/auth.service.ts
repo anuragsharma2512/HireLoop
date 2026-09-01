@@ -164,4 +164,18 @@ export class AuthService {
         refreshToken: newRefreshToken,
     }
   }
+
+  async logout(refreshToken?: string){
+    if(!refreshToken){
+      return;
+    }
+    try{
+      const payload= verifyRefreshToken(refreshToken);
+
+      await this.sessionRepository.deleteById(payload.sid)
+
+    }catch{}
+
+
+  }
 }
