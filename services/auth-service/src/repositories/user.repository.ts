@@ -26,4 +26,8 @@ export class UserRepository {
   }) {
     return UserModel.create(data);
   }
+
+  async findById(id: string){
+    return UserModel.findById(id);
+  }
 }

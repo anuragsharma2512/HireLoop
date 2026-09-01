@@ -1,4 +1,4 @@
-import jwt from "jsonwebtoken";
+import jwt, {JwtPayload} from "jsonwebtoken";
 import crypto from "crypto";
 
 import {env} from "../config/env.js";
@@ -68,4 +68,17 @@ export function getRefreshTokenExpiry(): Date{
     }
 
     return new Date(now+duration);
+}
+
+
+export function verifyRefreshToken(
+    token: string
+): RefreshTokenPayload{
+    const decoded = jwt.verify(token,env.JWT_REFRESH_SECRET);
+
+    if(typeof decoded === "string" || !decoded.sub || !("sid" in decoded)){
+        throw new Error("Invalid refresh token");
+    }
+
+    return { sub: decoded.sub, sid: decoded.sid as string};
 }
