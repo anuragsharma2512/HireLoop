@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import helmet from "helmet";
 import {pinoHttp} from "pino-http";
+import testRoutes from "./routes/test.routes.js";
 
 import { logger } from "./config/logger.js";
 import healthRoutes from "./routes/health.routes.js";
@@ -35,6 +36,7 @@ app.get("/", (_req, res) => {
 });
 
 app.use("/health", healthRoutes);
+app.use("/test", testRoutes);
 
 app.use(notFoundMiddleware);
 
