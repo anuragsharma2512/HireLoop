@@ -51,6 +51,7 @@ const profileSchema = new Schema<IProfile>(
       required: true,
       index: true,
     },
+
     firstName: {
       type: String,
       required: true,
@@ -144,4 +145,22 @@ const profileSchema = new Schema<IProfile>(
     timestamps: true,
     versionKey: false,
   },
+);
+
+profileSchema.index(
+  { username: 1 },
+  {
+    unique: true,
+    sparse: true,
+  },
+);
+
+profileSchema.index({
+  role: 1,
+  companyId: 1,
+});
+
+export const Profile: Model<IProfile> = model<IProfile>(
+  "Profile",
+  profileSchema,
 );

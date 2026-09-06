@@ -6,6 +6,7 @@ import testRoutes from "./routes/test.routes.js";
 
 import { logger } from "./config/logger.js";
 import healthRoutes from "./routes/health.routes.js";
+import profileRoutes from "./routes/profile.routes.js"
 import { notFoundMiddleware } from "./middlewares/not-found.middleware.js";
 import { errorMiddleware } from "./middlewares/error.middleware.js";
 
@@ -37,6 +38,7 @@ app.get("/", (_req, res) => {
 
 app.use("/health", healthRoutes);
 app.use("/test", testRoutes);
+app.use("/profiles", profileRoutes);
 
 app.use(notFoundMiddleware);
 

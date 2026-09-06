@@ -23,8 +23,6 @@ export const validate = (
     }
 
     req.body = result.data.body;
-    req.params = result.data.params as typeof req.params;
-    req.query = result.data.query as typeof req.query;
 
     next();
   };
